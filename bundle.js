@@ -24031,4 +24031,5 @@ function Dr(ut, Wt, o, M, S, m, a) {
     S
   ), s["권장 운동"] = u, s;
 }
+console.log("calc.js loaded");
 window.calc = Dr;
