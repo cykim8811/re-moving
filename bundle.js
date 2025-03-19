@@ -23023,7 +23023,7 @@ use chrome, FireFox or Internet Explorer 11`);
   }(Je)), Je.exports;
 }
 var wr = vr();
-const _r = /* @__PURE__ */ yr(wr), xr = "./data/removing-graph-ko_20250206.xlsx", Sr = async () => {
+const _r = /* @__PURE__ */ yr(wr), xr = "https://cdn.jsdelivr.net/gh/cykim8811/re-moving/data/removing-graph-ko_20250206.xlsx", Sr = async () => {
   const ut = new _r.Workbook(), Wt = await fetch(xr);
   if (!Wt.ok) throw new Error("Failed to fetch the file");
   const o = await Wt.arrayBuffer();
