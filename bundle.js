@@ -23846,28 +23846,28 @@ const Be = (ut) => {
   }));
 }, jr = (ut, Wt, o, M, S) => {
   let m = [];
-  for (let I of ut["약한 근육 코드"]) {
-    const _ = gr({
-      weakMuscleCode: I,
+  for (let F of ut["약한 근육 코드"]) {
+    const I = gr({
+      weakMuscleCode: F,
       removedMotionCodes: Wt
     });
-    m.push(..._);
+    m.push(...I);
   }
   const a = [], s = [];
-  for (let I of m)
-    s.includes(I.exercise.code) || (s.push(I.exercise.code), a.push(I));
-  m = a, m = m.sort((I, _) => _.totalScore - I.totalScore), console.log("초기 추천 가능 운동 목록 수:", m.length);
-  const n = m.map((I) => {
-    const _ = [];
-    for (let p of I.hits)
-      Re[p.muscle.code] && _.push(Re[p.muscle.code]);
-    const C = _.flat().map((p) => p.code), v = [];
-    for (let p of C)
-      v.includes(p) || v.push(p);
-    return v;
+  for (let F of m)
+    s.includes(F.exercise.code) || (s.push(F.exercise.code), a.push(F));
+  m = a, m = m.sort((F, I) => I.totalScore - F.totalScore), console.log("초기 추천 가능 운동 목록 수:", m.length);
+  const n = m.map((F) => {
+    const I = [];
+    for (let v of F.hits)
+      Re[v.muscle.code] && I.push(Re[v.muscle.code]);
+    const _ = I.flat().map((v) => v.code), C = [];
+    for (let v of _)
+      C.includes(v) || C.push(v);
+    return C;
   }), t = {};
-  for (let I of n)
-    t[I] === void 0 && (t[I] = 0), t[I] += 1;
+  for (let F of n)
+    t[F] === void 0 && (t[F] = 0), t[F] += 1;
   console.log("초기 운동 부위별 개수", t), console.log("난이도 필터링 후:", m.length);
   const e = {
     스트레칭: "stretching",
@@ -23875,63 +23875,63 @@ const Be = (ut) => {
     근력운동: "strength",
     체력운동: "stemina"
   }, l = [];
-  for (let I of m)
-    I.exercise.type[e[M]] && l.push(I);
-  m = l, M === "체력운동" && m.sort((I, _) => {
-    const C = I.exercise.globalMuscles;
-    return _.exercise.globalMuscles - C;
+  for (let F of m)
+    F.exercise.type[e[M]] && l.push(F);
+  m = l, M === "체력운동" && m.sort((F, I) => {
+    const _ = F.exercise.globalMuscles;
+    return I.exercise.globalMuscles - _;
   });
   let r, i, u;
   M === "스트레칭" ? (r = 0.1, i = 0.2, u = 0.7) : M === "관절운동" ? (r = 0.2, i = 0.3, u = 0.5) : M === "근력운동" ? (r = 0.5, i = 0.3, u = 0.2) : M === "체력운동" && (r = 0.7, i = 0.2, u = 0.1);
   const h = Math.max(1, o), c = Math.max(1, o - 1), d = Math.max(1, o - 2);
-  m = m.filter((I) => I.exercise.difficulty <= o && I.exercise.difficulty >= o - 2);
+  m = m.filter((F) => F.exercise.difficulty <= o && F.exercise.difficulty >= o - 2);
   let f = 0, w = 0, x = 0, T = 0;
   if (M === "체력운동") {
-    const I = [];
-    for (; T < S && (f > S * (r - 0.05) && (m = m.filter((C) => C.exercise.difficulty <= c)), w > S * (i - 0.05) && (m = m.filter((C) => C.exercise.difficulty <= d)), x > S * (u - 0.05) && (m = m.filter((C) => C.exercise.difficulty <= d - 1)), m.length !== 0); ) {
-      const _ = m.shift();
-      I.push(_), T += _.exercise.videoDuration, _.exercise.difficulty == h && (f += _.exercise.videoDuration), _.exercise.difficulty == c && (w += _.exercise.videoDuration), _.exercise.difficulty == d && (x += _.exercise.videoDuration);
+    const F = [];
+    for (; T < S && (f > S * (r - 0.05) && (m = m.filter((_) => _.exercise.difficulty <= c)), w > S * (i - 0.05) && (m = m.filter((_) => _.exercise.difficulty <= d)), x > S * (u - 0.05) && (m = m.filter((_) => _.exercise.difficulty <= d - 1)), m.length !== 0); ) {
+      const I = m.shift();
+      F.push(I), T += I.exercise.videoDuration, I.exercise.difficulty == h && (f += I.exercise.videoDuration), I.exercise.difficulty == c && (w += I.exercise.videoDuration), I.exercise.difficulty == d && (x += I.exercise.videoDuration);
     }
-    m = I;
+    m = F;
   } else if (M === "스트레칭" || M === "관절운동" || M === "근력운동") {
-    const I = [];
-    let _ = [], C = [];
-    M === "관절운동" ? (_ = ut["약한 부위 코드"].slice(0, 3), C = ut["약한 부위 코드"].slice(0, 3).map((g) => 0)) : M === "근력운동" ? (_ = ut["약한 부위 코드"].slice(0, 5), C = ut["약한 부위 코드"].slice(0, 5).map((g) => 0)) : M === "스트레칭" && (_ = ut["약한 부위 코드"].slice(0, 10), C = ut["약한 부위 코드"].slice(0, 10).map((g) => 0));
-    const v = m.map((g) => Re[g.hits[0].muscle.code].map((b) => b.code)).flat(), p = {};
-    for (let g of v)
-      p[g] === void 0 && (p[g] = 0), p[g] += 1;
-    for (console.log("운동 부위별 개수", p), m.forEach((g) => {
-      const b = g.hits.map((y) => Re[y.muscle.code].map((k) => k.code)).flat();
-      g.parts = b;
-    }); T < S && (f > S * (r - 0.05) && (m = m.filter((y) => y.exercise.difficulty <= c)), w > S * (i - 0.05) && (m = m.filter((y) => y.exercise.difficulty <= d)), x > S * (u - 0.05) && (m = []), m.length !== 0); ) {
-      M === "근력운동" && m.sort((y, k) => {
-        const R = y.exercise.multiJoint;
-        return k.exercise.multiJoint - R;
+    const F = [];
+    let I = [], _ = [];
+    M === "관절운동" ? (I = ut["약한 부위 코드"].slice(0, 3), _ = ut["약한 부위 코드"].slice(0, 3).map((p) => 0)) : M === "근력운동" ? (I = ut["약한 부위 코드"].slice(0, 5), _ = ut["약한 부위 코드"].slice(0, 5).map((p) => 0)) : M === "스트레칭" && (I = ut["약한 부위 코드"].slice(0, 10), _ = ut["약한 부위 코드"].slice(0, 10).map((p) => 0));
+    const C = m.map((p) => Re[p.hits[0].muscle.code].map((g) => g.code)).flat(), v = {};
+    for (let p of C)
+      v[p] === void 0 && (v[p] = 0), v[p] += 1;
+    for (console.log("운동 부위별 개수", v), m.forEach((p) => {
+      const g = p.hits.map((b) => Re[b.muscle.code].map((y) => y.code)).flat();
+      p.parts = g;
+    }); T < S && (f > S * (r - 0.05) && (m = m.filter((b) => b.exercise.difficulty <= c)), w > S * (i - 0.05) && (m = m.filter((b) => b.exercise.difficulty <= d)), x > S * (u - 0.05) && (m = []), m.length !== 0); ) {
+      M === "근력운동" && m.sort((b, y) => {
+        const k = b.exercise.multiJoint;
+        return y.exercise.multiJoint - k;
       });
-      const g = (y) => {
-        const k = y.parts.map((R) => {
-          const O = C[_.indexOf(R)];
-          return O === void 0 ? 1 / 0 : O;
+      const p = (b) => {
+        const y = b.parts.map((k) => {
+          const R = _[I.indexOf(k)];
+          return R === void 0 ? 1 / 0 : R;
         });
-        return Math.min(...k);
+        return Math.min(...y);
       };
-      m.sort((y, k) => g(y) - g(k)), m.sort((y, k) => k.exercise.difficulty - y.exercise.difficulty), M === "스트레칭" && m.sort((y, k) => g(y) - g(k));
-      const b = m.shift();
-      I.push(b), T += b.exercise.videoDuration, b.exercise.difficulty == h && (f += b.exercise.videoDuration), b.exercise.difficulty == c && (w += b.exercise.videoDuration), b.exercise.difficulty == d && (x += b.exercise.videoDuration);
-      for (let y = 0; y < _.length; y++)
-        b.parts.includes(_[y]) && (C[y] += 1);
+      m.sort((b, y) => p(b) - p(y)), m.sort((b, y) => y.exercise.difficulty - b.exercise.difficulty), M === "스트레칭" && m.sort((b, y) => p(b) - p(y));
+      const g = m.shift();
+      F.push(g), T += g.exercise.videoDuration, g.exercise.difficulty == h && (f += g.exercise.videoDuration), g.exercise.difficulty == c && (w += g.exercise.videoDuration), g.exercise.difficulty == d && (x += g.exercise.videoDuration);
+      for (let b = 0; b < I.length; b++)
+        g.parts.includes(I[b]) && (_[b] += 1);
     }
-    m = I;
+    m = F;
   }
-  m.sort((I, _) => {
-    const C = I.exercise.globalMuscles, v = _.exercise.globalMuscles;
-    return C - v;
-  }), m.sort((I, _) => {
-    const C = I.exercise.muscleCount, v = _.exercise.muscleCount;
-    return C - v;
-  }), m.sort((I, _) => {
-    const C = Number(I.exercise.kineticChain || 0);
-    return Number(_.exercise.kineticChain || 0) - C;
+  m.sort((F, I) => {
+    const _ = F.exercise.globalMuscles, C = I.exercise.globalMuscles;
+    return _ - C;
+  }), m.sort((F, I) => {
+    const _ = F.exercise.muscleCount, C = I.exercise.muscleCount;
+    return _ - C;
+  }), m.sort((F, I) => {
+    const _ = Number(F.exercise.kineticChain || 0);
+    return Number(I.exercise.kineticChain || 0) - _;
   });
   const B = [
     "매트 앉아서",
@@ -23942,23 +23942,18 @@ const Be = (ut) => {
     "의자 앉아서",
     "옆으로 누워서"
   ];
-  m.sort((I, _) => B.indexOf(I.exercise.pose) - B.indexOf(_.exercise.pose)), console.log("운동 추천 결과"), console.log(m), console.log(`
+  m.sort((F, I) => B.indexOf(F.exercise.pose) - B.indexOf(I.exercise.pose)), console.log("운동 추천 결과"), console.log(m), console.log(`
 추천 결과 분석`);
   const L = {};
-  for (let I of m)
-    L[I.exercise.difficulty] === void 0 && (L[I.exercise.difficulty] = 0), L[I.exercise.difficulty] += I.exercise.videoDuration;
+  for (let F of m)
+    L[F.exercise.difficulty] === void 0 && (L[F.exercise.difficulty] = 0), L[F.exercise.difficulty] += F.exercise.videoDuration;
   console.log("난이도별 운동 개수", L);
   const N = [r, i, u], P = [f / S, w / S, x / S];
   console.log("목표 난이도별 운동 시간 비율", N), console.log("난이도별 운동 시간 비율", P);
   let D = 0;
-  for (let I = 0; I < 3; I++)
-    D += N[I] * P[I];
-  D /= Math.sqrt(N.reduce((I, _) => I + _ * _, 0)), D /= Math.sqrt(P.reduce((I, _) => I + _ * _, 0)), console.log("난이도별 운동 시간 비율 일치도", D);
-  const F = {};
-  for (let I of m)
-    for (let _ of I.parts)
-      F[_] === void 0 && (F[_] = 0), F[_] += 1;
-  return console.log("부위별 운동 개수", F), console.log("목표 운동 시간", S), console.log("총 운동 시간", T), console.log("총 운동 시간 일치도", Math.min(1, T / S)), console.log("운동 시간 충분 여부: ", T >= S - 120), m.map((I) => I.exercise.name);
+  for (let F = 0; F < 3; F++)
+    D += N[F] * P[F];
+  return D /= Math.sqrt(N.reduce((F, I) => F + I * I, 0)), D /= Math.sqrt(P.reduce((F, I) => F + I * I, 0)), console.log("난이도별 운동 시간 비율 일치도", D), console.log("목표 운동 시간", S), console.log("총 운동 시간", T), console.log("총 운동 시간 일치도", Math.min(1, T / S)), console.log("운동 시간 충분 여부: ", T >= S - 120), m.map((F) => F.exercise.name);
 }, Ir = 0.3, Nr = 3, Pr = (ut, Wt, o) => {
   let M = [];
   console.log("약한 근육 코드", ut["약한 근육 코드"]);
